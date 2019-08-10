@@ -15,4 +15,5 @@ Imports: dplyr,
     tidyr,
     tibble,
     stats,
-    purrr
+    purrr,
+    rlang
