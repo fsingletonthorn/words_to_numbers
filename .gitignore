@@ -2,4 +2,4 @@
 .Rhistory
 .RData
 .Ruserdata
-R/run_codecov.R
+run_codecov.R
