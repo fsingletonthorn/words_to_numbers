@@ -31,7 +31,6 @@
 #' words_to_numbers(example)
 #'
 #' @export
-
 words_to_numbers <- function(string) {
 
   if(length(unlist(string)) > 1 | class(string) != "character") {
@@ -196,8 +195,8 @@ words_to_numbers <- function(string) {
   # this means that each set of number words is grouped together
   stringSplit$group <-
     ifelse(
-      tidyr::fill(stringSplit, group,  .direction = "down")$group == tidyr::fill(stringSplit, group,  .direction =  "up")$group,
-      tidyr::fill(stringSplit, group,  .direction = "down")$group,
+      tidyr::fill(stringSplit, "group",  .direction = "down")$group == tidyr::fill(stringSplit, group,  .direction =  "up")$group,
+      tidyr::fill(stringSplit, "group",  .direction = "down")$group,
       NA
     )
 

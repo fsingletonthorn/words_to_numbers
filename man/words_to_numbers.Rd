@@ -10,14 +10,17 @@ words_to_numbers(string)
 \item{string}{a character string}
 }
 \value{
-string with numbers written as words replaced by numbers
+Returns a string with any detected numbers written as words replaced by numbers
 }
 \description{
-words_to_numbers replaces numbers written in words with numerals.
+words_to_numbers takes a character string and replaces numbers
+written in words with numerics.
 }
 \examples{
 
+library(wordstonumbers)
 words_to_numbers("ninety-nine red balloons")
+
 words_to_numbers("twelve")
 
 words_to_numbers("Forty-three thousand")
