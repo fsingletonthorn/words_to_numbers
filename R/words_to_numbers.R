@@ -9,6 +9,7 @@
 #'
 #' @examples
 #'
+#' library(wordstonumbers)
 #' words_to_numbers("ninety-nine red balloons")
 #'
 #' words_to_numbers("twelve")
@@ -313,7 +314,7 @@ words_to_numbers <- function(string) {
     numericsOnly <-
       dplyr::filter(numericStrings,
                     numericStrings$numberBinary,
-                    group ==
+                    numericStrings$group ==
                       groups)
     if (nrow(numericsOnly) < 2) {
       # If there is only one element it doesn't need to change
@@ -406,7 +407,7 @@ words_to_numbers <- function(string) {
     numericsOnly$group <-
       stringr::str_c("a", numericsOnly$group, cumsum(numericsOnly$tochange))
     numericStrings[match(numericsOnly$id, numericStrings$id), ] <-
-      dplyr::select(numericsOnly,-tochange)
+      dplyr::select(numericsOnly,-"tochange")
   }
 
   # Dropping unchanging tokens (i.e., those that are not required, like punctuation that should not be altered)
@@ -461,7 +462,7 @@ words_to_numbers <- function(string) {
   numericedOutput <- stringSplit
 
   # for each group of numbers
-  for (groups in unique(na.omit(numericStrings$group))) {
+  for (groups in unique(stats::na.omit(numericStrings$group))) {
     ids <- dplyr::filter(numericStrings, group == groups)$id
     # Blanking out the non-used numbers and repacing strings with numbers
     numericedOutput$number[numericedOutput$id %in% ids][1] <-

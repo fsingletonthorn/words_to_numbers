@@ -13,4 +13,6 @@ Suggests: testthat
 Imports: dplyr,
     stringr,
     tidyr,
-    tibble
+    tibble,
+    stats,
+    purrr
