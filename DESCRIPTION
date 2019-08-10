@@ -2,8 +2,8 @@ Package: wordstonumbers
 Type: Package
 Title: WordsToNumbers
 Version: 1.0.0
-Author: Felix Singleton Thorn
-Maintainer: Felix Singleton Thorn <fsingletonthorn@gmail.com>
+Author: Felix Singleton Thorn <fsingletonthorn@gmail.com> (<https://orcid.org/0000-0003-0918-3766>)
+Maintainer:  Felix Singleton Thorn <fsingletonthorn@gmail.com>
 Description: A package to convert numbers written in words to numerics.
 License: MIT + file LICENSE
 Encoding: UTF-8
