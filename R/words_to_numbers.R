@@ -1,14 +1,15 @@
 #' words_to_numbers
 #'
+#'
 #' words_to_numbers takes a character string and replaces numbers
 #' written in words with numerics.
+#'
 #'
 #' @param string a character string
 #'
 #' @return Returns a string with any detected numbers written as words replaced by numbers
 #'
 #' @examples
-#'
 #' library(wordstonumbers)
 #' words_to_numbers("ninety-nine red balloons")
 #'
@@ -21,14 +22,16 @@
 #' example <-
 #' "The PRQ is a twelve-item, four-point Likert scale
 #' (from one = Never to four = Very Often) with three sub-scores
-#' bullying (PRQ-Bully), being victimized (PRQ-Victim),
+#' bullying (PRQ-Bully), being victimized (PRQgroup-Victim),
 #' and pro-social behavior (PRQ-Prosocial). A translated,
 #' backtranslated final Arabic version of the scale was found
 #' to be accurate showing good internal consistency in this
-#' sample [“PRQ-Victim” (alpha = .seventy four)
-#' and “PRQ-Bullies” (alpha = seventy-four)]."
+#' sample [PRQ-Victim (alpha = .seventy four)
+#' and PRQ-Bullies (alpha = seventy-four)]."
 #'
 #' words_to_numbers(example)
+#'
+#' @importFrom rlang .data
 #'
 #' @export
 words_to_numbers <- function(string) {
@@ -195,7 +198,7 @@ words_to_numbers <- function(string) {
   # this means that each set of number words is grouped together
   stringSplit$group <-
     ifelse(
-      tidyr::fill(stringSplit, "group",  .direction = "down")$group == tidyr::fill(stringSplit, group,  .direction =  "up")$group,
+      tidyr::fill(stringSplit, "group",  .direction = "down")$group == tidyr::fill(stringSplit, "group",  .direction =  "up")$group,
       tidyr::fill(stringSplit, "group",  .direction = "down")$group,
       NA
     )
@@ -255,7 +258,7 @@ words_to_numbers <- function(string) {
            no = NA)
 
   # Filtering down to just those groups that have numerics
-  numericStrings <- dplyr::filter(stringSplit, group > -1)
+  numericStrings <- dplyr::filter(stringSplit, .data$group > -1)
 
   # Identifying the types of each number
   numericStrings$magnitudeType <-
@@ -417,8 +420,8 @@ words_to_numbers <- function(string) {
     NA
   numericStrings$group <-
     ifelse(
-      tidyr::fill(numericStrings, group,  .direction = "down")$group == tidyr::fill(numericStrings, group,  .direction =  "up")$group,
-      tidyr::fill(numericStrings, group,  .direction = "down")$group,
+      tidyr::fill(numericStrings, .data$group,  .direction = "down")$group == tidyr::fill(numericStrings, .data$group,  .direction =  "up")$group,
+      tidyr::fill(numericStrings, .data$group,  .direction = "down")$group,
       NA
     )
   # Helper function for assessing each group of numbers
@@ -462,7 +465,7 @@ words_to_numbers <- function(string) {
 
   # for each group of numbers
   for (groups in unique(stats::na.omit(numericStrings$group))) {
-    ids <- dplyr::filter(numericStrings, group == groups)$id
+    ids <- dplyr::filter(numericStrings, .data$group == groups)$id
     # Blanking out the non-used numbers and repacing strings with numbers
     numericedOutput$number[numericedOutput$id %in% ids][1] <-
       identifyNumbers(numericStrings[numericStrings$group == groups, ])

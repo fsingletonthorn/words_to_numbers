@@ -17,7 +17,6 @@ words_to_numbers takes a character string and replaces numbers
 written in words with numerics.
 }
 \examples{
-
 library(wordstonumbers)
 words_to_numbers("ninety-nine red balloons")
 
@@ -30,12 +29,12 @@ words_to_numbers("There were one thousand, two hundred and thirty. Twelve.")
 example <-
 "The PRQ is a twelve-item, four-point Likert scale
 (from one = Never to four = Very Often) with three sub-scores
-bullying (PRQ-Bully), being victimized (PRQ-Victim),
+bullying (PRQ-Bully), being victimized (PRQgroup-Victim),
 and pro-social behavior (PRQ-Prosocial). A translated,
 backtranslated final Arabic version of the scale was found
 to be accurate showing good internal consistency in this
-sample [“PRQ-Victim” (alpha = .seventy four)
-and “PRQ-Bullies” (alpha = seventy-four)]."
+sample [PRQ-Victim (alpha = .seventy four)
+and PRQ-Bullies (alpha = seventy-four)]."
 
 words_to_numbers(example)
 
