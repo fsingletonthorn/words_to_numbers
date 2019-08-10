@@ -1,12 +1,16 @@
 Package: wordstonumbers
 Type: Package
-Title: What the Package Does (Title Case)
-Version: 0.1.0
-Author: Who wrote it
-Maintainer: The package maintainer <yourself@somewhere.net>
-Description: More about what it does (maybe more than one line)
-    Use four spaces when indenting paragraphs within the Description.
-License: What license is it under?
+Title: WordsToNumbers
+Version: 1.0.0
+Author: Felix Singleton Thorn
+Maintainer: Felix Singleton Thorn <fsingletonthorn@gmail.com>
+Description: A package to convert numbers written in words to numerics.
+License: MIT
 Encoding: UTF-8
 LazyData: true
 RoxygenNote: 6.1.1
+Suggests: testthat
+requires: tidyr
+    dplyr
+    stringr
+    tibble
