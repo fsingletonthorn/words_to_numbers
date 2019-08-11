@@ -267,10 +267,6 @@ words_to_numbers <- function(string) {
     tokens <- tolower(tokens)
     unlist(purrr::map(tokens,
                       function(token) {
-                        if (is.na(token)) {
-                          warning("token_to_number was passed a non-number, returns 'NA'")
-                          return(NA)
-                        }
                         if (is.null(NUMBER[token][[1]])) {
                           return(as.numeric(token))
                         } else {
