@@ -80,3 +80,9 @@ It also only breaks apart values after decimals using the same rules as for norm
 words_to_numbers('three point one four one five nine two six')
 ```
 
+It also does not yet recognise that certain numbers are likely to represent years.
+
+```{r example11}
+words_to_numbers('nineteen twenty')
+```
+

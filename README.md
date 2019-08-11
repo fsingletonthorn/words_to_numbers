@@ -66,12 +66,11 @@ words_to_numbers("one hundred and seventeen one hundred")
 
 ## Limitations
 
-However, not ways that numbers are reported in text are correctly
+However, not all ways that numbers can reported in text are correctly
 transformed at the moment.
 
 For example, this function does not currently correctly process
-magnitudes preceded by decimals (this is the next thing that will be
-fixed), e.g.:
+magnitudes preceded by decimals, e.g.:
 
 ``` r
 words_to_numbers("1.6 Billion")
@@ -85,4 +84,12 @@ they will be read as separate values.
 ``` r
 words_to_numbers('three point one four one five nine two six')
 #> [1] "3.1 4 1 5 9 2 6"
+```
+
+It also does not yet recognise that certain numbers are likely to
+represent years.
+
+``` r
+words_to_numbers('nineteen twenty')
+#> [1] "19 20"
 ```
