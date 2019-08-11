@@ -75,8 +75,8 @@ test_that("words to numbers works", {
 })
 
 test_that("words to numbers works", {
-  expect_identical(words_to_numbers("one hundred and sixty nine"),
-                   "169")
+  expect_identical(words_to_numbers("one hundred and sixty seven"),
+                   "167")
 })
 
 test_that("words to numbers works", {
@@ -171,60 +171,60 @@ test_that("words to numbers works", {
 test_that("one two three", {
   expect_identical(words_to_numbers('1 2 3'), "1 2 3")
 })
-# 
+#
 test_that("one two three 1", {
   expect_identical(words_to_numbers('1 2 3 one'), "1 2 3 1")
 })
-# 
+#
 test_that("words to numbers works", {
   expect_identical(words_to_numbers('test one two three test'), 'test 1 2 3 test')
 })
-# 
-# 
+#
+#
 test_that("forty two point five", {
   expect_identical(words_to_numbers('forty two point five'), "42.5")
 })
-# 
+#
 test_that("ten point five", {
   expect_identical(words_to_numbers('ten point five'), "10.5")
 })
-# 
+#
 test_that("digit one", {
   expect_identical(words_to_numbers('digit one'), 'digit 1')
 })
-# 
+#
 test_that("digit one ", {
   expect_identical(words_to_numbers('digit one '), 'digit 1 ')
 })
-# 
+#
 test_that("one thirty", {
   expect_identical(words_to_numbers('one thirty'), '1 30')
 })
-# 
+#
 test_that("thousand", {
   expect_identical(words_to_numbers('thousand'), "1000")
 })
-# 
+#
 test_that("million", {
   expect_identical(words_to_numbers('million'), "1000000")
 })
-# 
+#
 test_that("billion", {
   expect_identical(words_to_numbers('billion'), "1000000000")
 })
-# 
+#
 test_that("xxxxxxx one hundred", {
   expect_identical(words_to_numbers('xxxxxxx one hundred'), 'xxxxxxx 100')
 })
-# 
+#
 test_that("and", {
   expect_identical(words_to_numbers('and'), 'and')
 })
-# 
+#
 test_that("a", {
   expect_identical(words_to_numbers('a'), 'a')
 })
-# 
+#
 test_that("junkvalue", {
   expect_identical(words_to_numbers('junkvalue'), 'junkvalue')
 })
@@ -232,48 +232,48 @@ test_that("junkvalue", {
 test_that("ten point five, seven point eight", {
   expect_identical(words_to_numbers("ten point five, seven point eight"), "10.5, 7.8")
 })
-# 
+#
 test_that("eleven dot one", {
   expect_identical(words_to_numbers('eleven dot one'), "11.1")
 })
-# 
+#
 test_that("Fifty People, One Question Brooklyn", {
   expect_identical(words_to_numbers('Fifty People, One Question Brooklyn'), ('50 People, 1 Question Brooklyn'))
 })
-# 
+#
 test_that("Model Fifty-One Fifty-Six", {
   expect_identical(words_to_numbers('Model Fifty-One Fifty-Six'), ('Model 51 56'))
 })
-# 
+#
 test_that("Fifty Million Frenchmen", {
   expect_identical(words_to_numbers('Fifty Million Frenchmen'), ('50000000 Frenchmen'))
 })
-# 
+#
 test_that("A Thousand and One people", {
   expect_identical(words_to_numbers('Thousand and One people'), ('1001 people'))
 })
-# 
+#
 test_that("Ten Thousand Pictures of You", {
-  expect_identical(words_to_numbers('Ten Thousand Pictures of You'), ('10000 Pictures of You'))
+  expect_identical(words_to_numbers('Ten Thousand Pictures'), ('10000 Pictures'))
 })
-# 
+#
 test_that("one thirty", {
   expect_identical(words_to_numbers('one thirty'), ("1 30"))
 })
-# 
+#
 test_that("six sixty two", {
   expect_identical(words_to_numbers('six sixty two'), ("6 62"))
 })
-# 
+#
 test_that("one hundred thousand", {
-  expect_identical(as.numeric(words_to_numbers('one hundred thousand')), 
+  expect_identical(as.numeric(words_to_numbers('one hundred thousand')),
                    (100000))
 })
-# 
+#
 test_that("I have zero apples and four oranges", {
   expect_identical(words_to_numbers('I have zero apples and four oranges'), ('I have 0 apples and 4 oranges'))
 })
-# 
+#
 test_that("Dot two Dot", {
   expect_identical(words_to_numbers('Dot two Dot'), ('.2 Dot'))
 })
@@ -282,7 +282,7 @@ test_that("1000 hundred", {
   expect_identical(words_to_numbers("1000 hundred"), ('1000 100'))
 })
 
-# 
+#
 test_that("seventeen dot two four dot twelve dot five", {
   expect_identical(words_to_numbers('seventeen dot two four dot twelve'), ('17.2 4.12'))
 })
@@ -348,27 +348,27 @@ test_that("We do not error out to 0s", {
      expect_identical(words_to_numbers('nineteen eighty thousand'), ('19 80000'))
    })
 
-# 
-#  these below do not work
-# 
+
+#  these below illustrate numbers that do not work
+#
  # test_that("one thirty thousand", {
  #     expect_identical(words_to_numbers('one thirty thousand'),
  #                      ("130000"))
  #   })
-# 
-# 
+#
+#
 #  Notably we only capture one number after the decimal
 # test_that("three point one four one five nine two six", {
-#   expect_identical(words_to_numbers('three point one four one five nine two six'), 
+#   expect_identical(words_to_numbers('three point one four one five nine two six'),
 #                    3.1415926)
 # })
-# 
 #
-#  And word splitting breaks if the reason for the split is more than 3 units apart
+#
+#  And word splitting breaks if the reason for the split is more than 3 numeric tokens apart
 # test_that("three point one four one five nine two six", {
-#   expect_identical(words_to_numbers("two thousand and twenty-five million"), 
+#   expect_identical(words_to_numbers("two thousand and twenty-five million"),
 #                    "2000, 25000000")
 # })
-# 
+#
 #
 
