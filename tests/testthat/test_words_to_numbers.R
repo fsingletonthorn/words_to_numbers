@@ -349,6 +349,13 @@ test_that("We do not error out to 0s", {
    })
 
 
+ test_that("incorrect objects kick up warnings", {
+ expect_warning(words_to_numbers(c("one two", "three")))
+ expect_warning(words_to_numbers(list("one two", "three")))
+ expect_warning(words_to_numbers(data.frame("one two", "three")))
+ }
+   )
+
 #  these below illustrate numbers that do not work
 #
  # test_that("one thirty thousand", {
