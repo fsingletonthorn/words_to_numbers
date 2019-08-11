@@ -66,9 +66,9 @@ words_to_numbers("one hundred and seventeen one hundred")
 
 ## Limitations
 
-However, not ways that numbers are reported in text are correctly transformed at the moment. 
+However, not all ways that numbers can reported in text are correctly transformed at the moment. 
 
-For example,  this function does not currently correctly process magnitudes preceded by decimals (this is the next thing that will be fixed), e.g.:
+For example, this function does not currently correctly process magnitudes preceded by decimals, e.g.:
 
 ```{r example6}
 words_to_numbers("1.6 Billion")
