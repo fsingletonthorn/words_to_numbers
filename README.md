@@ -4,9 +4,9 @@
 # wordstonumbers ![codecov.io](https://codecov.io/gh/fsingletonthorn/words_to_numbers/branch/master/graph/badge.svg) ![travis-ci.org](https://travis-ci.org/fsingletonthorn/words_to_numbers.svg?branch=master)
 
 wordstonumbers is an R package for text analysis pre-processing that
-transforms numbers written in words to numerics (e.g., “one hundred and
-twenty three thousand” to “123000”). Works on numbers up to the
-decillions.
+transforms numbers written in words to numeric digits (e.g., “one
+hundred and twenty three thousand” to “123000”). Works on numbers up to
+the decillions.
 
 ## Installation
 
@@ -46,11 +46,6 @@ words_to_numbers("The Library of Babel (by Jorge Luis Borges) describes a librar
 #> [1] "The Library of Babel (by Jorge Luis Borges) describes a library that contains all possible 410 page books made with a character set of 25 characters (22 letters, as well as spaces, periods, and commas), with 80 lines per book and 40 characters per line."
 ```
 
-``` r
-words_to_numbers("three hundred billion, one hundred and 79 cats")
-#> [1] "300000000179 cats"
-```
-
 This function attempts to break numbers apart ‘intelligently’, guessing
 which values are likely to represent separate numbers, e.g.:
 
@@ -62,6 +57,20 @@ words_to_numbers("one two three four")
 ``` r
 words_to_numbers("one hundred and seventeen one hundred")
 #> [1] "117 100"
+```
+
+The function can also deal with some common cases where non-decimal
+numeric digits are intersperced with numbers-as-words.
+
+``` r
+words_to_numbers("three hundred billion, two hundred and 79 cats")
+#> [1] "300000000279 cats"
+
+words_to_numbers("300 billion, 2 hundred and 79 dogs")
+#> [1] "300000000279 dogs"
+
+words_to_numbers("17 hundred freshwater fish")
+#> [1] "1700 freshwater fish"
 ```
 
 ## Limitations
@@ -93,3 +102,6 @@ represent years.
 words_to_numbers('nineteen twenty')
 #> [1] "19 20"
 ```
+
+Please report any bugs or issues
+[here](https://github.com/fsingletonthorn/words_to_numbers/issues)\!

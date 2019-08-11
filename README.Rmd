@@ -15,7 +15,7 @@ knitr::opts_chunk$set(
 # wordstonumbers   ![codecov.io](https://codecov.io/gh/fsingletonthorn/words_to_numbers/branch/master/graph/badge.svg) ![travis-ci.org](https://travis-ci.org/fsingletonthorn/words_to_numbers.svg?branch=master)
 
 
-wordstonumbers is an R package for text analysis pre-processing that transforms numbers written in words to numerics (e.g., “one hundred and twenty three thousand” to “123000”). Works on numbers up to the decillions.
+wordstonumbers is an R package for text analysis pre-processing that transforms numbers written in words to numeric digits (e.g., “one hundred and twenty three thousand” to “123000”). Works on numbers up to the decillions.
 
 ## Installation
 
@@ -50,10 +50,6 @@ words_to_numbers("The PRQ is a twelve-item, four-point Likert scale (from one = 
 words_to_numbers("The Library of Babel (by Jorge Luis Borges) describes a library that contains all possible four-hundred and ten page books made with a character set of twenty five characters (twenty two letters, as well as spaces, periods, and commas), with eighty lines per book and forty characters per line.")
 ```
 
-```{r example8}
-words_to_numbers("three hundred billion, one hundred and 79 cats")
-```
-
 This function attempts to break numbers apart 'intelligently', guessing which values are likely to represent separate numbers, e.g.:
 
 ```{r example9}
@@ -62,6 +58,16 @@ words_to_numbers("one two three four")
 
 ```{r example10}
 words_to_numbers("one hundred and seventeen one hundred")
+```
+
+The function can also deal with some common cases where non-decimal numeric digits are intersperced with numbers-as-words. 
+
+```{r example8}
+words_to_numbers("three hundred billion, two hundred and 79 cats")
+
+words_to_numbers("300 billion, 2 hundred and 79 dogs")
+
+words_to_numbers("17 hundred freshwater fish")
 ```
 
 ## Limitations
@@ -85,4 +91,6 @@ It also does not yet recognise that certain numbers are likely to represent year
 ```{r example11}
 words_to_numbers('nineteen twenty')
 ```
+
+Please report any bugs or issues [here](https://github.com/fsingletonthorn/words_to_numbers/issues)!
 
