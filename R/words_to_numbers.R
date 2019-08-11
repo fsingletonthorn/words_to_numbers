@@ -44,72 +44,43 @@ words_to_numbers <- function(string) {
   }
 
   ### Setting up constants
-  UNIT <- list(
+  UNITS <- list(
     zero = 0,
-    #  first = 1,
     one = 1,
-    #  second = 2,
     two = 2,
-    #  third = 3,
-    #  thirteenth = 13,
     thirteen = 13,
     three = 3,
-    #  fourth = 4,
-    #  fourteenth = 14,
     fourteen = 14,
     four = 4,
-    #  fifteenth = 15,
     fifteen = 15,
-    #  fifth = 5,
     five = 5,
-    #  sixth = 6,
-    #  sixteenth = 16,
     sixteen = 16,
     six = 6,
-    #  seventeenth = 17,
     seventeen = 17,
-    #  seventh = 7,
     seven = 7,
-    #  eighteenth = 18,
     eighteen = 18,
-    #  eighth = 8,
     eight = 8,
-    #  nineteenth = 19,
     nineteen = 19,
-    #  ninth = 9,
     nine = 9,
-    #  tenth = 10,
     ten = 10,
-    #  eleventh = 11,
     eleven = 11,
-    #  twelfth = 12,
     twelve = 12
   )
 
-  TEN <- list(
+  TENS <- list(
     ten = 10,
-    # tenth = 10,
     twenty = 20,
-    #  twentieth = 20,
     thirty = 30,
-    #  thirtieth = 30,
     forty = 40,
-    #  fortieth = 40,
     fifty = 50,
-    #  fiftieth = 50,
     sixty = 60,
-    #  sixtieth = 60,
     seventy = 70,
-    #  seventieth = 70,
     eighty = 80,
-    #  eightieth = 80,
-    ninety = 90 #,
-    #  ninetieth = 90
+    ninety = 90
   )
 
-  MAGNITUDE = list(
+  MAGNITUDES <- list(
     hundred = 100,
-    #  hundredth = 100,
     thousand = 1000,
     million = 1000000,
     billion = 1000000000,
@@ -123,13 +94,13 @@ words_to_numbers <- function(string) {
     decillion = 1000000000000000000000000000000000
   )
 
-  NUMBER <- c(UNIT, TEN, MAGNITUDE)
+  NUMBER <- c(UNITS, TENS, MAGNITUDES)
 
-  UNIT_KEYS <- names(UNIT)
-  TEN_KEYS <- names(TEN)
-  MAGNITUDE_KEYS <- names(MAGNITUDE)
+  UNIT_NAMES <- names(UNITS)
+  TEN_NAMES <- names(TENS)
+  MAGNITUDE_NAMES <- names(MAGNITUDES)
 
-  NUMBER_WORDS <- c(UNIT_KEYS, TEN_KEYS, MAGNITUDE_KEYS)
+  NUMBER_NAMES <- c(UNIT_NAMES, TEN_NAMES, MAGNITUDE_NAMES)
 
   # Splitting in to tokens at punctuation
   stringSplitVec <-
@@ -153,7 +124,7 @@ words_to_numbers <- function(string) {
   # Detecting numbers - i.e., any words that match any of the NUMBER_WORDS
   numberBinary <-
     stringr::str_detect(stringSplitVec, stringr::regex(
-      paste("^", NUMBER_WORDS, "$", collapse = "|", sep = ""),
+      paste("^", NUMBER_NAMES, "$", collapse = "|", sep = ""),
       ignore_case = T
     ))
 
@@ -178,7 +149,6 @@ words_to_numbers <- function(string) {
     )
 
   stringSplit$group <- NA
-
 
   # Using cumulative sum to count the number of non-number items, not counting punctuation
   stringSplit$group[!stringSplit$punctuationBinary] <-
@@ -240,7 +210,6 @@ words_to_numbers <- function(string) {
     ,
     "", stringSplit$stringSplit)
 
-
   # Replace  "dot" or "point" with points (as eg "ten point five")
   stringSplit$stringSplit <-
     ifelse(
@@ -263,28 +232,28 @@ words_to_numbers <- function(string) {
   # Identifying the types of each number
   numericStrings$magnitudeType <-
     stringr::str_detect(numericStrings$stringSplit,
-                        stringr::regex(paste0("^", MAGNITUDE_KEYS, "$", collapse = "|"),
+                        stringr::regex(paste0("^", MAGNITUDE_NAMES, "$", collapse = "|"),
                                        ignore_case = T)) |
     ifelse(
       !is.na(numericStrings$number),
-      as.numeric(numericStrings$number) %in% MAGNITUDE,
+      as.numeric(numericStrings$number) %in% MAGNITUDES,
       F
     )
 
   numericStrings$tenType <-
     stringr::str_detect(numericStrings$stringSplit,
-                        stringr::regex(paste0("^", TEN_KEYS, "$", collapse = "|"),
+                        stringr::regex(paste0("^", TEN_NAMES, "$", collapse = "|"),
                                        ignore_case = T)) |
     ifelse(!is.na(numericStrings$number),
            (
              as.numeric(numericStrings$number) == 10 |
-               (as.numeric(numericStrings$number) %in% TEN)
+               (as.numeric(numericStrings$number) %in% TENS)
            )
            , F)
 
   numericStrings$unitType <-
     stringr::str_detect(numericStrings$stringSplit,
-                        stringr::regex(paste0("^", UNIT_KEYS, "$", collapse = "|"),
+                        stringr::regex(paste0("^", UNIT_NAMES, "$", collapse = "|"),
                                        ignore_case = T)) |
     ifelse(
       !is.na(numericStrings$number),
@@ -416,8 +385,7 @@ words_to_numbers <- function(string) {
   numericStrings <- dplyr::filter(numericStrings,!is.na(groups))
 
   # Reassigning the now ungrouped non-numerics
-  numericStrings$group[!stringr::str_detect(numericStrings$group, "^a\\d")] <-
-    NA
+  numericStrings$group[!stringr::str_detect(numericStrings$group, "^a\\d")] <- NA
   numericStrings$group <-
     ifelse(
       tidyr::fill(numericStrings, .data$group,  .direction = "down")$group == tidyr::fill(numericStrings, .data$group,  .direction =  "up")$group,
@@ -430,7 +398,7 @@ words_to_numbers <- function(string) {
     numericsOnly <- dplyr::filter(processedNumerics, numberBinary)
     # Creating numbers columns
     numericsOnly$number[is.na(numericsOnly$number)] <-
-      as.numeric(NUMBER[match(tolower(numericsOnly$stringSplit[is.na(numericsOnly$number)]), NUMBER_WORDS)])
+      as.numeric(NUMBER[match(tolower(numericsOnly$stringSplit[is.na(numericsOnly$number)]), NUMBER_NAMES)])
     # Copying for tracking of original numbers, which impact the way that things are summed up
     numericsOnly$oldNumber <- numericsOnly$number
     # For all magnitiude types, count all smaller magnitude types as multipliers of the magnitude value
