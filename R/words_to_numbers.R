@@ -304,6 +304,10 @@ words_to_numbers <- function(string) {
           # And breatking if a a ten type is preceeded by a ten type
           (numericsOnly$tenType[pairs_to_test$e1] &
              numericsOnly$tenType[pairs_to_test$e2]) |
+          # And breatking if a a ten type is preceeded by a unit type above 10
+          (numericsOnly$tenType[pairs_to_test$e1] &
+             numericsOnly$unitType[pairs_to_test$e2]) &
+          token_to_number(numericsOnly$stringSplit[pairs_to_test$e2]) > 10 |
           # Adding break if a larger number in digits is followed by a word in
           # numbers of a smaller magnitude (e.g., "1000 hundred" or "100 ten")
           (

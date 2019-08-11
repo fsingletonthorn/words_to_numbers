@@ -348,6 +348,11 @@ test_that("We do not error out to 0s", {
      expect_identical(words_to_numbers('nineteen eighty thousand'), ('19 80000'))
    })
 
+ test_that("TENS to UNITS > 10 breats", {
+   expect_identical(words_to_numbers('thirty eleven'), ('30 11'))
+   expect_identical(words_to_numbers('twenty nineteen'), ('20 19'))
+})
+
 
  test_that("incorrect objects kick up warnings", {
   expect_warning(words_to_numbers(c("one two", "three")))
