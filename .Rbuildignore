@@ -2,3 +2,5 @@
 ^\.Rproj\.user$
 .travis.yml
 run_codecov.R
+^README\.Rmd$
+^README-.*\.png$

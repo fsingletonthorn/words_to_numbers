@@ -1,64 +1,67 @@
+---
+output: github_document
+---
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# wordstonumbers ![codecov.io](https://codecov.io/gh/fsingletonthorn/words_to_numbers/branch/master/graph/badge.svg) ![travis-ci.org](https://travis-ci.org/fsingletonthorn/words_to_numbers.svg?branch=master)
+```{r, echo = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.path = "README-"
+)
+```
 
-wordstonumbers is an R package for text analysis pre-processing that
-transforms numbers written in words to numerics (e.g., “one hundred and
-twenty three thousand” to “123000”).
+# wordstonumbers   ![codecov.io](https://codecov.io/gh/fsingletonthorn/words_to_numbers/branch/master/graph/badge.svg) ![travis-ci.org](https://travis-ci.org/fsingletonthorn/words_to_numbers.svg?branch=master)
+
+
+wordstonumbers is an R package for text analysis pre-processing that transforms numbers written in words to numerics (e.g., “one hundred and twenty three thousand” to “123000”). 
 
 ## Installation
 
 You can install wordstonumbers from github with:
 
-``` r
+```{r gh-installation, eval = FALSE}
 # install.packages("devtools")
 devtools::install_github("fsingletonthorn/words_to_numbers")
 ```
 
 ## Example
 
-``` r
+```{r example1}
 library(wordstonumbers)
 
 words_to_numbers("ninety-nine red balloons")
-#> [1] "99 red balloons"
 ```
 
-``` r
+```{r example2}
 
 words_to_numbers("The answer is forty-two")
-#> [1] "The answer is 42"
 ```
 
-``` r
+```{r example3}
 
 words_to_numbers("The PRQ is a twelve-item, four-point Likert scale (from one = Never to four = Very Often) with three sub-scores.")
-#> [1] "The PRQ is a 12-item, 4-point Likert scale (from 1 = Never to 4 = Very Often) with 3 sub-scores."
 ```
 
-``` r
+```{r example4}
 words_to_numbers("The Library of Babel (by Jorge Luis Borges) describes a library that contains all possible four-hundred and ten page books made with a character set of twenty five characters (twenty two letters, as well as spaces, periods, and commas), with eighty lines per book and forty characters per line.")
-#> [1] "The Library of Babel (by Jorge Luis Borges) describes a library that contains all possible 410 page books made with a character set of 25 characters (22 letters, as well as spaces, periods, and commas), with 80 lines per book and 40 characters per line."
 ```
 
-``` r
+
+```{r example5}
 
 words_to_numbers("three hundred billion, one hundred and 79 cats")
-#> [1] "300000000179 cats"
 ```
 
-Note that this function does not currently correctly process magnitudes
-preceeded by decimals, e.g.,
+Note that this function does not currently correctly process magnitudes preceeded by decimals, e.g., 
 
-``` r
+```{r example6}
 words_to_numbers("1.6 Billion")
-#> [1] "1.6000000000"
 ```
 
 And some other possible values will also not be correctly transformed
-
-``` r
+```{r example7}
 words_to_numbers('three point one four one five nine two six')
-#> [1] "3.1 4 1 5 9 2 6"
+
 ```
