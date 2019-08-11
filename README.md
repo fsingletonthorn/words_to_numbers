@@ -5,7 +5,8 @@
 
 wordstonumbers is an R package for text analysis pre-processing that
 transforms numbers written in words to numerics (e.g., “one hundred and
-twenty three thousand” to “123000”).
+twenty three thousand” to “123000”). Works on numbers up to the
+decillions.
 
 ## Installation
 
@@ -17,6 +18,9 @@ devtools::install_github("fsingletonthorn/words_to_numbers")
 ```
 
 ## Example
+
+The words\_to\_numbers function deals with the most common ways that
+numbers are reported as words. For example:
 
 ``` r
 library(wordstonumbers)
@@ -43,20 +47,40 @@ words_to_numbers("The Library of Babel (by Jorge Luis Borges) describes a librar
 ```
 
 ``` r
-
 words_to_numbers("three hundred billion, one hundred and 79 cats")
 #> [1] "300000000179 cats"
 ```
 
-Note that this function does not currently correctly process magnitudes
-preceeded by decimals, e.g.,
+This function attempts to break numbers apart ‘intelligently’, guessing
+which values are likely to represent separate numbers, e.g.:
+
+``` r
+words_to_numbers("one two three four")
+#> [1] "1 2 3 4"
+```
+
+``` r
+words_to_numbers("one hundred and seventeen one hundred")
+#> [1] "117 100"
+```
+
+## Limitations
+
+However, not ways that numbers are reported in text are correctly
+transformed at the moment.
+
+For example, this function does not currently correctly process
+magnitudes preceded by decimals (this is the next thing that will be
+fixed), e.g.:
 
 ``` r
 words_to_numbers("1.6 Billion")
 #> [1] "1.6000000000"
 ```
 
-And some other possible values will also not be correctly transformed
+It also only breaks apart values after decimals using the same rules as
+for normal numbers, meaning that if people list numbers after decimals
+they will be read as separate values.
 
 ``` r
 words_to_numbers('three point one four one five nine two six')

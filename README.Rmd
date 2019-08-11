@@ -15,7 +15,7 @@ knitr::opts_chunk$set(
 # wordstonumbers   ![codecov.io](https://codecov.io/gh/fsingletonthorn/words_to_numbers/branch/master/graph/badge.svg) ![travis-ci.org](https://travis-ci.org/fsingletonthorn/words_to_numbers.svg?branch=master)
 
 
-wordstonumbers is an R package for text analysis pre-processing that transforms numbers written in words to numerics (e.g., “one hundred and twenty three thousand” to “123000”). 
+wordstonumbers is an R package for text analysis pre-processing that transforms numbers written in words to numerics (e.g., “one hundred and twenty three thousand” to “123000”). Works on numbers up to the decillions.
 
 ## Installation
 
@@ -27,6 +27,8 @@ devtools::install_github("fsingletonthorn/words_to_numbers")
 ```
 
 ## Example
+
+The words_to_numbers function deals with the most common ways that numbers are reported as words. For example:
 
 ```{r example1}
 library(wordstonumbers)
@@ -48,20 +50,33 @@ words_to_numbers("The PRQ is a twelve-item, four-point Likert scale (from one = 
 words_to_numbers("The Library of Babel (by Jorge Luis Borges) describes a library that contains all possible four-hundred and ten page books made with a character set of twenty five characters (twenty two letters, as well as spaces, periods, and commas), with eighty lines per book and forty characters per line.")
 ```
 
-
-```{r example5}
-
+```{r example8}
 words_to_numbers("three hundred billion, one hundred and 79 cats")
 ```
 
-Note that this function does not currently correctly process magnitudes preceeded by decimals, e.g., 
+This function attempts to break numbers apart 'intelligently', guessing which values are likely to represent separate numbers, e.g.:
+
+```{r example9}
+words_to_numbers("one two three four")
+```
+
+```{r example10}
+words_to_numbers("one hundred and seventeen one hundred")
+```
+
+## Limitations
+
+However, not ways that numbers are reported in text are correctly transformed at the moment. 
+
+For example,  this function does not currently correctly process magnitudes preceded by decimals (this is the next thing that will be fixed), e.g.:
 
 ```{r example6}
 words_to_numbers("1.6 Billion")
 ```
 
-And some other possible values will also not be correctly transformed
+It also only breaks apart values after decimals using the same rules as for normal numbers, meaning that if people list numbers after decimals they will be read as separate values.
+
 ```{r example7}
 words_to_numbers('three point one four one five nine two six')
-
 ```
+
