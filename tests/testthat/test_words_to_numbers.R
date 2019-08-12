@@ -186,6 +186,7 @@ test_that("We do not error out to 0s", {
    expect_identical(words_to_numbers('1.81 million one hundred'), ('1810100'))
    expect_identical(words_to_numbers('1.8 million one hundred and twelve'), ('1800112'))
    expect_identical(words_to_numbers('1.8 million one hundred and 12'), ('1800112'))
+   expect_identical(words_to_numbers("million three million"), "1000000 3000000")
  })
 
 

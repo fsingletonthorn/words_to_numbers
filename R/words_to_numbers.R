@@ -337,7 +337,7 @@ words_to_numbers <- function(string) {
     }
 
     # This part checks triplets
-    if (nrow(numericsOnly) > 3) {
+    if (nrow(numericsOnly) > 2) {
       triplets_to_test <-
         tibble::tibble(
           e1 = 1:(nrow(numericsOnly) - 2),
@@ -351,10 +351,10 @@ words_to_numbers <- function(string) {
         #  This breaks if:
         # a mangnitude is followed by a magnitude, and the latter magnitude is larger than the first
         # (e.g., "twenty thousand, one million" as compared to "one million, twenty thousand")
-        # unless the lower number is a hundred in which case we let it slide (because, for example one hundred twenty thousand makes sense)
-
-        # This carves out some exceptions for when we have e.g., Hundreds of thousands
-        # When the number before the hundred is below ten
+        # unless the lower number is a hundred in which case we let it slide
+        # (because, for example "one hundred twenty thousand" can be parsed as a single number)
+        # This carves out some exceptions for when xs of hundreds of thousands
+        # And the number before the hundred is below ten
         c(
           T,
           !(
@@ -370,7 +370,19 @@ words_to_numbers <- function(string) {
               token_to_number(numericsOnly$stringSplit[triplets_to_test$e3]) &
               numericsOnly$magnitudeType[triplets_to_test$e1] &
               numericsOnly$magnitudeType[triplets_to_test$e3]
-          ),
+          ) |
+          # Also breaks tokens apart if the token before is equal to the token afterwards, AND
+          # The token in the middle is less than either the one before or after
+          # And the end tokens are both magnitudes e.g., "1.6 million three million"
+          (token_to_number(numericsOnly$stringSplit[triplets_to_test$e1]) ==
+          token_to_number(numericsOnly$stringSplit[triplets_to_test$e3]) &
+          (token_to_number(numericsOnly$stringSplit[triplets_to_test$e2]) <
+               token_to_number(numericsOnly$stringSplit[triplets_to_test$e1]) |
+            token_to_number(numericsOnly$stringSplit[triplets_to_test$e2]) <
+                              token_to_number(numericsOnly$stringSplit[triplets_to_test$e3])) &
+        numericsOnly$magnitudeType[triplets_to_test$e1] &
+          numericsOnly$magnitudeType[triplets_to_test$e3])
+        ,
         F
       ) | numericsOnly$tochange
     }
