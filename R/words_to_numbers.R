@@ -153,7 +153,7 @@ words_to_numbers <- function(string) {
     cumsum(!stringSplit$numberBinary[!stringSplit$punctuationBinary])
 
   # Removing dots and other words from contention to ensure that groups get broken at points
-  stringSplit$group[stringr::str_detect(stringSplit$stringSplit, "\\.")] <-
+  stringSplit$group[stringr::str_detect(stringSplit$stringSplit, "^\\.$")] <-
     -1
   stringSplit$group  <-
     ifelse((stringSplit$numberBinary |
