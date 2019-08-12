@@ -103,7 +103,7 @@ words_to_numbers <- function(string) {
   # Splitting in to tokens at punctuation
   stringSplitVec <-
     stringr::str_split(string,
-                       "((?<=[[!\"\\#$%&'()*+,\\-./:;<=>?@\\[\\\\\\]^_`{|}~]|\\s]))|((?=[[!\"\\#$%&'()*+,\\-./:;<=>?@\\[\\\\\\]^_`{|}~]|\\s]))",
+                       "((?<=[[!\"\\#$%&'()*+,\\-/:;<=>?@\\[\\\\\\]^_`{|}~]|\\s]))|((?=[[!\"\\#$%&'()*+,\\-/:;<=>?@\\[\\\\\\]^_`{|}~]|\\s]))|((?<![\\d])(?<=\\.)(?![\\d]))|((?<![\\d])(?=\\.)(?![\\d]))",
                        simplify = T)
 
   # create binaries for whitespace or punctuation
