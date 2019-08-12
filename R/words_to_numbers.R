@@ -103,7 +103,7 @@ words_to_numbers <- function(string) {
   # Splitting in to tokens at punctuation
   stringSplitVec <-
     stringr::str_split(string,
-                       "(?<=[[[:punct:]]|\\s])|(?=[[[:punct:]]|\\s])",
+                       "((?<=[[!\"\\#$%&'()*+,\\-./:;<=>?@\\[\\\\\\]^_`{|}~]|\\s]))|((?=[[!\"\\#$%&'()*+,\\-./:;<=>?@\\[\\\\\\]^_`{|}~]|\\s]))",
                        simplify = T)
 
   # create binaries for whitespace or punctuation
@@ -178,6 +178,7 @@ words_to_numbers <- function(string) {
                                            stringr::regex("point|dot",
                                                           ignore_case = T))
   stringSplit$tokenAheadPoint <- c(stringSplit$point[-1], F)
+
   stringSplit$tokenBehindPoint <-
     c(F, stringSplit$point[-last_position])
 
@@ -272,6 +273,7 @@ words_to_numbers <- function(string) {
                         }
                       }))
   }
+
 
   # Breaking apart groups according to the following rules
   for (groups in unique(numericStrings$group)) {

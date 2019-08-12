@@ -363,6 +363,19 @@ test_that("We do not error out to 0s", {
 
 #  these below illustrate numbers that do not work
 #
+
+ test_that("1.6 thousand", {
+   expect_identical(words_to_numbers('1.6 thousand'), ('1600'))
+ })
+
+ test_that("3.5 million", {
+   expect_identical(words_to_numbers('3.5 million'), ('3500000'))
+ })
+
+ test_that("1.8 hundred thousand", {
+   expect_identical(words_to_numbers('1.8 hundred thousand'), ('180000'))
+ })
+
  # test_that("one thirty thousand", {
  #     expect_identical(words_to_numbers('one thirty thousand'),
  #                      ("130000"))
