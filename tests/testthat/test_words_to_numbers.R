@@ -189,8 +189,7 @@ test_that("We do not error out to 0s", {
    expect_identical(words_to_numbers("million three million"), "1000000 3000000")
  })
 
-
-#  the below illustrate cases where slightly non-intuitive outcomes results are returned
+ #  the below illustrate cases where slightly non-intuitive outcomes results are returned
 # The optimal returns are shown,
 # test_that("one thirty thousand", {
 #     expect_identical(words_to_numbers('one thirty thousand'),
@@ -198,6 +197,8 @@ test_that("We do not error out to 0s", {
 #   })
 #
 #
+# This will bug out - because the fi is not an FI but an "ﬁ"
+# words_to_numbers("N = 5,720 -- corresponding to ﬁve measurements each for 1,140 respondents.")
 # Notably we only capture one number after the decimal
 # test_that("three point one four one five nine two six", {
 #   expect_identical(words_to_numbers('three point one four one five nine two six'),
