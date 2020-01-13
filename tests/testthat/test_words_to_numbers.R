@@ -189,6 +189,24 @@ test_that("We do not error out to 0s", {
    expect_identical(words_to_numbers("million three million"), "1000000 3000000")
  })
 
+# Testing that non-ascii characters in numbers do not break the package
+ test_that("Non-ascii characters work OK", {
+   expect_identical(
+ words_to_numbers("N = 5,720 -- corresponding to ﬁve measurements each for 1,140 respondents."), "N = 5,720 -- corresponding to 5 measurements each for 1,140 respondents.")
+ })
+
+ test_that("Non-ascii characters work OK", {
+   expect_identical(
+ words_to_numbers("ﬁfteen"), "15"
+   )
+})
+
+ test_that("Non-ascii characters work OK", {
+   expect_identical(
+ words_to_numbers("ﬁfteen, thirty"), "15, 30"
+   )
+})
+
  #  the below illustrate cases where slightly non-intuitive outcomes results are returned
 # The optimal returns are shown,
 # test_that("one thirty thousand", {
@@ -197,8 +215,6 @@ test_that("We do not error out to 0s", {
 #   })
 #
 #
-# This will bug out - because the fi is not an FI but an "ﬁ"
-# words_to_numbers("N = 5,720 -- corresponding to ﬁve measurements each for 1,140 respondents.")
 # Notably we only capture one number after the decimal
 # test_that("three point one four one five nine two six", {
 #   expect_identical(words_to_numbers('three point one four one five nine two six'),
