@@ -127,13 +127,17 @@ words_to_numbers <- function(string) {
       ignore_case = T
     ))
 
+  # Converting all characters in the number areas into ascii characters
+  stringSplitVec[numberBinary] <- stringi::stri_trans_general( stringSplitVec[numberBinary], "latin-ascii")
+
   # Quick exit if there are no numbers words detected
   if (sum(numberBinary[!numericBinary]) < 1) {
     return(string)
   }
+
   # And quick exit if there is only one number word pressent
   if (length(stringSplitVec) == 1) {
-    return(as.character(format(NUMBER[[tolower(string)]], scientific = F)))
+    return(as.character(format(NUMBER[[tolower(stringSplitVec)]], scientific = F)))
   }
 
   # Making tibble
