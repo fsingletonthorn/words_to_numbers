@@ -41,6 +41,7 @@ words_to_numbers <- function(string) {
   string <- unlist(string)[[1]]
   }
 
+
   ### Setting up constants
   UNITS <- list(
     zero = 0,
@@ -448,7 +449,7 @@ words_to_numbers <- function(string) {
     ids <- dplyr::filter(numericStrings, .data$group == groups)$id
     # Blanking out the non-used numbers and repacing strings with numbers
     numericedOutput$number[numericedOutput$id %in% ids][1] <-
-      identifyNumbers(numericStrings[numericStrings$group == groups, ])
+      identifyNumbers( dplyr::filter(numericStrings, group == groups ) )
     # Replacing strings with the appropraite values, after removing all old text
     numericedOutput$stringSplit[numericedOutput$id %in% ids] <- ""
     numericedOutput$stringSplit[numericedOutput$id %in% ids][1] <-
