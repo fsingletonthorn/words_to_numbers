@@ -160,6 +160,7 @@ words_to_numbers <- function(string) {
   # Removing dots and other words from contention to ensure that groups get broken at points
   stringSplit$group[stringr::str_detect(stringSplit$stringSplit, "^\\.$")] <-
     -1
+
   stringSplit$group  <-
     ifelse((stringSplit$numberBinary |
               stringSplit$punctuationBinary),
@@ -322,17 +323,17 @@ words_to_numbers <- function(string) {
               token_to_number(numericsOnly$stringSplit[pairs_to_test$e2]) <=
               token_to_number(numericsOnly$stringSplit[pairs_to_test$e1])
           ) |
-          # Breaking if two digits are consequtive (e.g., "20, 1" vs "21")
+          # Breaking if two digits are consecutive (e.g., "20, 1" vs "21")
           (
             numericsOnly$numericBinary[pairs_to_test$e1] &
               numericsOnly$numericBinary[pairs_to_test$e2]
           ) |
-          # And breaking if a number is preceeded by itself
+          # And breaking if a number is preceded by itself
           (tolower(numericsOnly$stringSplit[pairs_to_test$e1]) ==
              (
                tolower(numericsOnly$stringSplit[pairs_to_test$e2])
              )) |
-          # Breaking if a magnitude is preceeded by a magnitude of a larger magnitude
+          # Breaking if a magnitude is preceded by a magnitude of a larger magnitude
           token_to_number(numericsOnly$stringSplit[pairs_to_test$e1]) > 100 &
           token_to_number(numericsOnly$stringSplit[pairs_to_test$e1]) >
           token_to_number(numericsOnly$stringSplit[pairs_to_test$e2]) &
@@ -391,11 +392,14 @@ words_to_numbers <- function(string) {
         F
       ) | numericsOnly$tochange
     }
-    # Updating numeric strings withupdated groups
+    # coercion to character to prevent Can't convert <character> to <double> error
+    numericStrings$group <- as.character(numericStrings$group)
+
+    # Updating numeric strings with updated groups
     numericsOnly$group <-
       stringr::str_c("a", numericsOnly$group, cumsum(numericsOnly$tochange))
     numericStrings[match(numericsOnly$id, numericStrings$id), ] <-
-      dplyr::select(numericsOnly,-"tochange")
+      dplyr::select(numericsOnly,-tochange)
   }
 
   # Dropping unchanging tokens (i.e., those that are not required, like punctuation that should not be altered)
