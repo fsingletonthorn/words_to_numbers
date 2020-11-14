@@ -13,8 +13,8 @@ the decillions.
 You can install wordstonumbers from github with:
 
 ``` r
-# install.packages("devtools")
-devtools::install_github("fsingletonthorn/words_to_numbers")
+# install.packages("remotes")
+remotes::install_github("fsingletonthorn/words_to_numbers")
 ```
 
 ## Examples
